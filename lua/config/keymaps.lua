@@ -12,7 +12,7 @@ vim.keymap.set({ "n", "i" }, "<D-s>", "<Esc>:w<CR>", { noremap = true, silent = 
 vim.keymap.set({ "i", "n" }, "696971", "ggVG", { noremap = true, silent = true })
 vim.keymap.set({ "i", "n" }, "<D-a>", "ggVG", { noremap = true, silent = true })
 -- this is the keymap to remove the delete functionality of ctrl - u and make it go half page up
-vim.keymap.set("n", "42070", "<C-u>", { noremap = true, silent = true, desc = "" })
+vim.keymap.set("n", "42069", "<C-u>", { noremap = true, silent = true, desc = "" })
 -- this is the command to set nvim to paste only from the yank buffer
 vim.api.nvim_set_keymap("v", "p", '"_dp', { noremap = true, silent = true, desc = "continnual paste" })
 
