@@ -5,6 +5,7 @@ vim.keymap.set("n", "696969", "<Esc>o", { noremap = true, silent = true })
 vim.keymap.set("n", "<D-CR>", "<Esc>o", { noremap = true, silent = true })
 -- this is the keymap for command del. I have already set up del to return hex code 0x16 in iterm2 setting so that corrensponds to ctrl u this command just deletes the entire line
 vim.keymap.set("n", "<C-u>", ":<C-u>normal! dd<CR>", { noremap = true, silent = true })
+-- vim.keymap.set("n", "<D-Del>", "<Esc>d0<CR>", { noremap = true, silent = true })
 -- this is the key map to set command-s to save the current file
 vim.keymap.set({ "n", "i" }, "696970", "<Esc>:w<CR>", { noremap = true, silent = true })
 vim.keymap.set({ "n", "i" }, "<D-s>", "<Esc>:w<CR>", { noremap = true, silent = true })
@@ -36,3 +37,15 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "<leader>pp", ":QuartoPreview<CR>", opts)
   end,
 })
+-- vim.api.nvim_set_keymap(
+--   "n",
+--   "<leader>rr",
+--   ":w !g++-14 % -o %:r && ./%:r < ./input.txt > ./output.txt<CR>",
+--   { noremap = true, silent = true }
+-- )
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>rr",
+  ":w !g++-14 % -o %:r && ./%:r < ./input.txt > ./output.txt && tail -f ./output.txt<CR>",
+  { noremap = true, silent = true }
+)

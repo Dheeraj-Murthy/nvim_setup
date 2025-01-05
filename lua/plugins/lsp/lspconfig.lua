@@ -126,11 +126,31 @@ return {
 
       ["clangd"] = function()
         lspconfig.clangd.setup({
-          cmd = { "clangd", "--compile-commands-dir=." },
+          cmd = {
+            "clangd",
+            "--query-driver=/opt/homebrew/Cellar/gcc/14.2.0_1/bin/g++-14",             -- Use g++ instead of clang++
+          },
           capabilities = capabilities,
-          init_options = { clangdFileStatus = true, fallbackFlags = { "-xc++", "-std=c++17" } },
+          init_options = {
+            clangdFileStatus = true,
+            fallbackFlags = {
+              -- "-xc++",
+              -- "-std=c++17",
+              -- "-I/opt/homebrew/Cellar/gcc/14.2.0_1/include/c++/14/",
+              -- "-I/opt/homebrew/Cellar/gcc/14.2.0_1/include/c++/14/aarch64-apple-darwin24/",
+              -- "-I /opt/homebrew/Cellar/gcc/14.2.0_1/bin/../lib/gcc/current/gcc/aarch64-apple-darwin24/14/../../../../../../include/c++/14",
+              -- "-I /opt/homebrew/Cellar/gcc/14.2.0_1/bin/../lib/gcc/current/gcc/aarch64-apple-darwin24/14/../../../../../../include/c++/14/aarch64-apple-darwin24",
+              -- "-I /opt/homebrew/Cellar/gcc/14.2.0_1/bin/../lib/gcc/current/gcc/aarch64-apple-darwin24/14/../../../../../../include/c++/14/backward",
+              -- "-I /opt/homebrew/Cellar/gcc/14.2.0_1/bin/../lib/gcc/current/gcc/aarch64-apple-darwin24/14/include",
+              -- "-I /opt/homebrew/Cellar/gcc/14.2.0_1/bin/../lib/gcc/current/gcc/aarch64-apple-darwin24/14/include-fixed",
+              -- "-I /Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk/usr/include",
+              -- "-I /Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk/System/Library/Frameworks",
+              "-I/usr/local/include",
+            },
+          },
           on_attach = function(client, bufnr)
             on_attach(client, bufnr)
+            print("Clangd attached to buffer " .. bufnr)
             client.server_capabilities.documentFormattingProvider = true
           end,
         })

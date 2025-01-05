@@ -23,7 +23,6 @@ return {
       })
     end,
   },
-
   { "jpalardy/vim-slime" },
   { "ekickx/clipboard-image.nvim" },
 }
