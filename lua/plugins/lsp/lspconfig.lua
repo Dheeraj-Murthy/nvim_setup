@@ -83,6 +83,15 @@ return {
       ["rust_analyzer"] = function()
         lspconfig.rust_analyzer.setup({
           capabilities = capabilities,
+          on_attach = function(client, bufnr)
+            -- automatically format on save
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              pattern = "*.rs",
+              callback = function()
+                vim.cmd("RustFmt")
+              end,
+            })
+          end,
           settings = {
             ["rust-analyzer"] = {
               cargo = {
@@ -91,6 +100,9 @@ return {
               checkOnSave = {
                 command = "clippy",                 -- Use `clippy` for on-save checks
               },
+              -- formatting = {
+              --   enable = true,
+              -- },
               diagnostics = {
                 enable = false,                 -- Enable diagnostics
               },
@@ -101,11 +113,6 @@ return {
               lens = {
                 enable = true,                 -- Enable inlay lens
               },
-              -- inlayHints = {
-              --   enable = true,                         -- Enable inlay hints
-              --   typeHints = true,                      -- Show type hints
-              --   parameterHints = true,                 -- Show parameter hints
-              -- },
             },
           },
         })
@@ -134,17 +141,6 @@ return {
           init_options = {
             clangdFileStatus = true,
             fallbackFlags = {
-              -- "-xc++",
-              -- "-std=c++17",
-              -- "-I/opt/homebrew/Cellar/gcc/14.2.0_1/include/c++/14/",
-              -- "-I/opt/homebrew/Cellar/gcc/14.2.0_1/include/c++/14/aarch64-apple-darwin24/",
-              -- "-I /opt/homebrew/Cellar/gcc/14.2.0_1/bin/../lib/gcc/current/gcc/aarch64-apple-darwin24/14/../../../../../../include/c++/14",
-              -- "-I /opt/homebrew/Cellar/gcc/14.2.0_1/bin/../lib/gcc/current/gcc/aarch64-apple-darwin24/14/../../../../../../include/c++/14/aarch64-apple-darwin24",
-              -- "-I /opt/homebrew/Cellar/gcc/14.2.0_1/bin/../lib/gcc/current/gcc/aarch64-apple-darwin24/14/../../../../../../include/c++/14/backward",
-              -- "-I /opt/homebrew/Cellar/gcc/14.2.0_1/bin/../lib/gcc/current/gcc/aarch64-apple-darwin24/14/include",
-              -- "-I /opt/homebrew/Cellar/gcc/14.2.0_1/bin/../lib/gcc/current/gcc/aarch64-apple-darwin24/14/include-fixed",
-              -- "-I /Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk/usr/include",
-              -- "-I /Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk/System/Library/Frameworks",
               "-I/usr/local/include",
             },
           },
