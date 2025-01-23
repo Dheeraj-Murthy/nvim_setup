@@ -18,12 +18,9 @@ require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim",              import = "lazyvim.plugins" },
-    -- { "LazyVim/LazyVim" },
     -- import/override with your plugins
     { "akinsho/nvim-bufferline.nvim", disable = true },     --Disable bufferline
     { "akinsho/nvim-bufferline.lua",  disable = true },     -- Disable nvim-bufferline.lua
-    -- { "blink.cmp",                    enabled = false },
-
     { import = "plugins" },
     { import = "plugins.lsp" },
   },

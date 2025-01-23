@@ -1,0 +1,39 @@
+{
+  "contributes": {
+    "snippets": [
+      {
+        "language": "python",
+        "path": "./python.json"
+      },
+      {
+        "language": "quarto",
+        "path": "./quarto.json"
+      },
+      {
+        "language": "lua",
+        "path": "./nvim-lua.json"
+      },
+      {
+        "language": "c",
+        "path": "./c_lang.json"
+      },
+      {
+        "language": "cpp",
+        "path": "./cpp_lang.json"
+      },
+      {
+        "language": "javascript",
+        "path": "./javascript.json"
+      },
+      {
+        "language": "typescript",
+        "path": "./javascript.json"
+      },
+      {
+        "language": "all",
+        "path": "./allFiletypes.json"
+      }
+    ]
+  },
+  "name": "my-snippets"
+}
