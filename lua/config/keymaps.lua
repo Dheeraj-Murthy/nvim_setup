@@ -1,5 +1,7 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 
+--^ General Keymaps
+--
 -- this is the command for command enter. escape into a new line from withing a line
 vim.keymap.set("n", "696969", "<Esc>o", { noremap = true, silent = true })
 vim.keymap.set("n", "<D-CR>", "<Esc>o", { noremap = true, silent = true })
@@ -18,6 +20,8 @@ vim.keymap.set("n", "42069", "<C-u>", { noremap = true, silent = true, desc = ""
 -- this is the command to set nvim to paste only from the yank buffer
 vim.api.nvim_set_keymap("v", "p", '"_dp', { noremap = true, silent = true, desc = "continnual paste" })
 
+--^ Plugin specific keymaps
+--
 -- Define key mappings only for Quarto filetypes
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "quarto",
@@ -37,15 +41,22 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "<leader>pp", ":QuartoPreview<CR>", opts)
   end,
 })
--- vim.api.nvim_set_keymap(
---   "n",
---   "<leader>rr",
---   ":w !g++-14 % -o %:r && ./%:r < ./input.txt > ./output.txt<CR>",
---   { noremap = true, silent = true }
--- )
+
 vim.api.nvim_set_keymap(
   "n",
   "<leader>rr",
   ":w !g++-14 % -o %:r && ./%:r < ./input.txt > ./output.txt && tail -f ./output.txt<CR>",
   { noremap = true, silent = true }
 )
+
+-- Telescope keybindings
+vim.keymap.set("n", "<leader> ", "<cmd>Telescope find_files<cr>")
+vim.keymap.set("n", "<leader>/", "<cmd>Telescope live_grep<cr>")
+vim.keymap.set("n", "<leader>bf", "<cmd>Telescope buffers<cr>")
+
+--this is for competitest plugin
+vim.keymap.set("n", "<leader>at", ":CompetiTest run<CR>", { desc = "Run Testcases" })
+vim.keymap.set("n", "<leader>aa", ":CompetiTest add_testcase<CR>", { desc = "Add Testcase" })
+vim.keymap.set("n", "<leader>ad", ":CompetiTest delete_testcase<CR>", { desc = "Delete Testcase" })
+vim.keymap.set("n", "<leader>ar", ":CompetiTest receive problem<CR>", { desc = "Receive Problem" })
+vim.keymap.set("n", "<leader>ae", ":CompetiTest edit_testcase<CR>", { desc = "Edit Testcase" })

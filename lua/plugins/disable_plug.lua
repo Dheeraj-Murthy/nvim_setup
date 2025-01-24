@@ -5,7 +5,9 @@ return {
   { "akinsho/nvim-bufferline.nvim", enabled = false },   --Disable bufferline
   { "akinsho/nvim-bufferline.lua",  enabled = false },   -- Disable nvim-bufferline.lua
   { "nvimdev/dashboard-nvim",       enabled = false },
-
+  -- Disable FZF
+  { "ibhagwan/fzf-lua",             enabled = false },
+  -- { "junegunn/fzf",                 enabled = false },
   -- { "nvim-telescope/telescope.nvim",               enabled = false },   -- Disable Telescope
   -- { "nvim-lua/plenary.nvim",                       enabled = false },   -- Disable Plenary
   -- { "nvim-treesitter/nvim-treesitter",             enabled = false },   -- Disable Treesitter
