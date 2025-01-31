@@ -1,17 +1,19 @@
 {
   "basic": {
+    "prefix": "basic",
     "body": [
       "#include<bits/stdc++.h>",
       "using namespace std;",
       "",
       "int main()",
       "{",
-      "    ",
+      "    ${0}",
       "    return 0;",
       "}"
     ]
   },
   "contest": {
+    "prefix": "old_contest",
     "body": [
       "#include<bits/stdc++.h>",
       "using namespace std;",
@@ -49,6 +51,7 @@
       "",
       "void solve() {",
       "    int i, j, n;",
+      "    ${0}",
       "}",
       "",
       "int main() {",

@@ -3,7 +3,7 @@ return {
   { "rcarriga/nvim-notify",         enabled = false },
   { "nvim-neo-tree/neo-tree.nvim",  enabled = false },   -- Disable Neo-tree
   { "akinsho/nvim-bufferline.nvim", enabled = false },   --Disable bufferline
-  { "akinsho/nvim-bufferline.lua",  enabled = false },   -- Disable nvim-bufferline.lua
+  -- { "akinsho/nvim-bufferline.lua",  enabled = false },   -- Disable nvim-bufferline.lua
   { "nvimdev/dashboard-nvim",       enabled = false },
   -- Disable FZF
   { "ibhagwan/fzf-lua",             enabled = false },

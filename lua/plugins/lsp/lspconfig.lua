@@ -141,6 +141,7 @@ return {
           init_options = {
             clangdFileStatus = true,
             fallbackFlags = {
+              "xc++",
               "-I/usr/local/include",
             },
           },

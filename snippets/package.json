@@ -15,11 +15,15 @@
       },
       {
         "language": "c",
-        "path": "./c_lang.json"
+        "path": "./c_land.json"
       },
       {
         "language": "cpp",
-        "path": "./cpp_lang.json"
+        "path": "./cpp/cpp_lang.json"
+      },
+      {
+        "language": "cpp",
+        "path": "./cpp/cpp_contest.json"
       },
       {
         "language": "javascript",
