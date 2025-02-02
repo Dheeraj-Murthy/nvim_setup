@@ -1,5 +1,6 @@
 -- Disable LazyVim's default autocomplete suggestions
 
+
 vim.g.mapleader = " "
 require("config.lazy")
 require("config.lazy_opts")
