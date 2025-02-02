@@ -6,7 +6,7 @@ return {
     "saghen/blink.cmp",
     { "antosha417/nvim-lsp-file-operations", config = true },
     {
-      "folke/neodev.nvim",       -- Uncomment if using Lua development
+      "folke/neodev.nvim", -- Uncomment if using Lua development
     },
   },
   config = function()
@@ -95,23 +95,23 @@ return {
           settings = {
             ["rust-analyzer"] = {
               cargo = {
-                allFeatures = true,                 -- Enable all Cargo features
+                allFeatures = true, -- Enable all Cargo features
               },
               checkOnSave = {
-                command = "clippy",                 -- Use `clippy` for on-save checks
+                command = "clippy", -- Use `clippy` for on-save checks
               },
               -- formatting = {
               --   enable = true,
               -- },
               diagnostics = {
-                enable = false,                 -- Enable diagnostics
+                enable = false, -- Enable diagnostics
               },
               assist = {
-                importGranularity = "module",                 -- Suggest imports at the module level
-                importPrefix = "by_self",                     -- Use `self` for imports
+                importGranularity = "module", -- Suggest imports at the module level
+                importPrefix = "by_self",     -- Use `self` for imports
               },
               lens = {
-                enable = true,                 -- Enable inlay lens
+                enable = true, -- Enable inlay lens
               },
             },
           },
@@ -135,7 +135,7 @@ return {
         lspconfig.clangd.setup({
           cmd = {
             "clangd",
-            "--query-driver=/opt/homebrew/Cellar/gcc/14.2.0_1/bin/g++-14",             -- Use g++ instead of clang++
+            "--query-driver=/opt/homebrew/Cellar/gcc/14.2.0_1/bin/g++-14", -- Use g++ instead of clang++
           },
           capabilities = capabilities,
           init_options = {
@@ -162,7 +162,7 @@ return {
       end,
 
       ["ts_ls"] = function()
-        lspconfig.tsserver.setup({
+        lspconfig.ts_ls.setup({
           capabilities = capabilities,
           on_attach = function(client, bufnr)
             on_attach(client, bufnr)
