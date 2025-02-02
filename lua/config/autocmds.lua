@@ -9,3 +9,4 @@ vim.api.nvim_create_autocmd("BufReadPre", {
   end,
 })
 vim.cmd("colorscheme tokyonight")
+vim.cmd("set laststatus=3")

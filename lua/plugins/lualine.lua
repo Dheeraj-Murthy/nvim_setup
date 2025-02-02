@@ -1,12 +1,3 @@
--- return {
---   "nvim-lualine/lualine.nvim",
---   lazy = false,
---   dependencies = { "nvim-tree/nvim-web-devicons" },   -- Optional for icons
---   config = function()
---     require("lualine").setup({})
---   end,
--- }
--- init.lua or lualine.lua
 return {
   "nvim-lualine/lualine.nvim",
   lazy = false,
@@ -16,6 +7,7 @@ return {
       options = {
         icons_enabled = true, -- Enable/disable icons in the statusline
         theme = "horizon", -- Set your desired theme, e.g., 'gruvbox', 'nightfly', 'ayu', etc.
+        globalstatus = 3,
         component_separators = { left = "", right = "" }, -- Separator between components
         section_separators = { left = "", right = "" }, -- Separator between sections
         disabled_filetypes = { "NvimTree", "dashboard", "packer" }, -- Disable lualine for certain filetypes
@@ -32,7 +24,7 @@ return {
         lualine_a = { "filename" }, -- Show the filename only when inactive
         lualine_b = {},
         lualine_c = {},
-        lualine_x = {},
+        lualine_x = { "buffers" },
         lualine_y = {},
         lualine_z = {},
       },
