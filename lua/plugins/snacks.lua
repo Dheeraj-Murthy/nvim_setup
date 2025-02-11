@@ -31,6 +31,7 @@ return {
     quickfile = { enabled = true },
     scroll = { enabled = false },
     statuscolumn = { enabled = false },
+    -- explorer = { enabled = true },
     words = { enabled = false },
   },
   keys = {

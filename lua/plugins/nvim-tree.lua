@@ -2,6 +2,7 @@ return {
   "nvim-tree/nvim-tree.lua",
   version = "*",
   lazy = false,
+  -- enabled = false,
   dependencies = {
     "nvim-tree/nvim-web-devicons",
   },
@@ -9,9 +10,9 @@ return {
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
     require("nvim-tree").setup({
-      sync_root_with_cwd = true,       -- Makes nvim-tree open in the current directory
-      respect_buf_cwd = true,          -- Optional: syncs nvim-tree with the buffer's directory
-      update_cwd = true,               -- Optional: updates Neovim's `cwd` when nvim-tree's root changes
+      sync_root_with_cwd = true, -- Makes nvim-tree open in the current directory
+      respect_buf_cwd = true,    -- Optional: syncs nvim-tree with the buffer's directory
+      update_cwd = true,         -- Optional: updates Neovim's `cwd` when nvim-tree's root changes
       -- disable_netrw = true,
       -- hijack_netrw = true,       -- Hijack netrw's default file explorer functionality
       view = {
