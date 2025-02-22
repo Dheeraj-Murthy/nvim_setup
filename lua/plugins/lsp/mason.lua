@@ -23,6 +23,9 @@ return {
         },
       },
     })
+    require("mason-nvim-dap").setup {
+      ensure_installed = { "codelldb" }
+    }
 
     mason_lspconfig.setup({
       -- list of servers for mason to install

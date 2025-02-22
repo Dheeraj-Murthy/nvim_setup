@@ -13,7 +13,15 @@ return {
       end
     end
 
-    bufferline.setup({})
+    bufferline.setup({
+      options = {
+        separator_style = { " ", " " }, -- Try a preset style
+        indicator = {
+          icon = { '▎', '➤' }, -- Ensure your font supports this character
+          style = 'icon',
+        },
+      },
+    })
 
     -- Auto-toggle bufferline when opening or closing buffers
     vim.api.nvim_create_autocmd({ "BufAdd", "BufDelete" }, {

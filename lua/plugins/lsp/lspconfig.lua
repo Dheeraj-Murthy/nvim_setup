@@ -35,13 +35,13 @@ return {
       keymap("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
       keymap("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
       keymap({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
-      keymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
-      keymap("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
-      keymap("n", "<leader>d", vim.diagnostic.open_float, opts)
-      keymap("n", "[d", vim.diagnostic.goto_prev, opts)
-      keymap("n", "]d", vim.diagnostic.goto_next, opts)
-      keymap("n", "K", vim.lsp.buf.hover, opts)
-      keymap("n", "<leader>rs", ":LspRestart<CR>", opts)
+      -- keymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
+      -- keymap("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
+      -- keymap("n", "<leader>d", vim.diagnostic.open_float, opts)
+      -- keymap("n", "[d", vim.diagnostic.goto_prev, opts)
+      -- keymap("n", "]d", vim.diagnostic.goto_next, opts)
+      -- keymap("n", "K", vim.lsp.buf.hover, opts)
+      -- keymap("n", "<leader>rs", ":LspRestart<CR>", opts)
 
       -- Enable formatting if available
       if client.server_capabilities.documentFormattingProvider then
