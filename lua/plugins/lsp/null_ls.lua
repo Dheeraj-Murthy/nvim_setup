@@ -1,22 +1,32 @@
 return {
   "jose-elias-alvarez/null-ls.nvim",
   event = { "BufReadPre", "BufNewFile" },
-  servers = {
-    pyright = {},
-  },
   config = function()
     local null_ls = require("null-ls")
 
-    -- Define your sources for Python only
+    -- Define your sources for Python and Markdown
     local python_sources = {
-      null_ls.builtins.formatting.black,         -- Python formatter
-      null_ls.builtins.formatting.isort,         -- Python import sorter
-      null_ls.builtins.diagnostics.pylint,       -- Python linter
+      null_ls.builtins.formatting.black,   -- Python formatter
+      null_ls.builtins.formatting.isort,   -- Python import sorter
+      null_ls.builtins.diagnostics.pylint, -- Python linter
     }
+    -- local markdown_sources = {
+    --   null_ls.builtins.formatting.prettier.with({
+    --     filetypes = { "markdown" },
+    --   }),
+    -- }
 
-    -- Set up null-ls for Python files only
+    -- Combine sources into one flat list
+    local all_sources = {}
+    for _, source in ipairs(python_sources) do
+      table.insert(all_sources, source)
+    end
+    -- for _, source in ipairs(markdown_sources) do
+    --   table.insert(all_sources, source)
+    -- end
+
     null_ls.setup({
-      sources = python_sources,
+      sources = all_sources,
       on_attach = function(client, bufnr)
         if client.supports_method("textDocument/formatting") then
           -- Set up keymap for manual formatting
@@ -28,24 +38,17 @@ return {
             { noremap = true, silent = true }
           )
 
-          -- Autoformat on save for Python files only
+          -- Autoformat on save
           vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = bufnr,
             callback = function()
               vim.lsp.buf.format({ async = false })
+              vim.opt_local.wrap = true
+              vim.opt_local.linebreak = true -- break lines at word boundaries
+              vim.opt_local.spell = true     -- optional: enable spell checking
             end,
           })
         end
-      end,
-    })
-
-    -- Only attach the null-ls setup for Python files
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = "python",
-      callback = function()
-        null_ls.setup({
-          sources = python_sources,
-        })
       end,
     })
   end,

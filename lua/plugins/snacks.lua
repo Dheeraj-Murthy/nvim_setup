@@ -33,6 +33,11 @@ return {
     statuscolumn = { enabled = false },
     -- explorer = { enabled = true },
     words = { enabled = false },
+    zen = {
+      toggles = {
+        dim = false,
+      }
+    }
   },
   keys = {
     {

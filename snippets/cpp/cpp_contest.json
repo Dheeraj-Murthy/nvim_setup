@@ -1,4 +1,32 @@
 {
+  "aman": {
+    "prefix": "aman",
+    "body": [
+      "#include<bits/stdc++.h>",
+      "using namespace std;",
+      "",
+      "using i64 = long long int;",
+      "",
+      "void solve() {",
+      "    ${0}",
+      "}",
+      "",
+      "int main() {",
+      "    ios::sync_with_stdio(false);",
+      "    cin.tie(nullptr);",
+      "",
+      "    int t = 1;",
+      "    cin >> t;",
+      "    while(t--) {",
+      "        solve();",
+      "    }",
+      "",
+      "    return 0;",
+      "}",
+      ""
+    ],
+    "description": "basic"
+  },
   "summer": {
     "prefix": "summer",
     "body": [
@@ -508,5 +536,36 @@
       "};"
     ],
     "description": "segtree-2"
+  },
+  "Disjoint Set Union": {
+    "prefix": "dsu",
+    "body": [
+      "class DisjointSets {",
+      "    private:",
+      "        vector<int> parents;",
+      "        vector<int> sizes;",
+      "    ",
+      "    public:",
+      "        DisjointSets(int size) : parents(size), sizes(size , 1) {",
+      "            for (int i = 0; i < size; i++) { parents[i] = i; }",
+      "        }",
+      "        ",
+      "        int find(int x) { return parents[x] == x ? x : (parents[x] = find(parents[x])); }",
+      "",
+      "        bool unite(int x, int y){",
+      "            int x_root = find(x);",
+      "            int y_root = find(y);",
+      "            if(x_root == y_root) { return false; }",
+      "",
+      "            if(sizes[x_root] < sizes[y_root]) { swap(x_root, y_root); }",
+      "            sizes[x_root] += sizes[y_root];",
+      "            parents[y_root] = x_root;",
+      "            return true;",
+      "        }",
+      "",
+      "        bool connected(int x, int y) { return find(x) == find(y); }",
+      "};"
+    ],
+    "description": "Disjoint Set Union"
   }
 }

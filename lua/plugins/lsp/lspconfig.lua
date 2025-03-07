@@ -142,6 +142,7 @@ return {
             fallbackFlags = {
               "xc++",
               "-I/usr/local/include",
+              "-std=c++23",
             },
           },
           on_attach = function(client, bufnr)
@@ -152,13 +153,13 @@ return {
         })
       end,
 
-      ["marksman"] = function()
-        lspconfig.marksman.setup({
-          capabilities = capabilities,
-          filetypes = { "markdown" },
-          on_attach = on_attach,
-        })
-      end,
+      -- ["marksman"] = function()
+      --   lspconfig.marksman.setup({
+      --     capabilities = capabilities,
+      --     filetypes = { "markdown", "md" }, -- Ensure filetypes match
+      --     on_attach = on_attach,
+      --   })
+      -- end,
 
       ["ts_ls"] = function()
         lspconfig.ts_ls.setup({
