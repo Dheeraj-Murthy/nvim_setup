@@ -5,7 +5,7 @@ return {
     config = function()
       require("mini.surround").setup() -- Minimal setup for mini.surround
       require('mini.pairs').setup()
-      require('mini.ai')
+      require('mini.ai').setup()
       require('mini.snippets').setup()
       require('mini.sessions').setup({
         autoread = true,                            -- Load last session on startup

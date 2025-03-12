@@ -35,7 +35,7 @@ return {
       keymap("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
       keymap("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
       keymap({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
-      -- keymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
+      keymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
       -- keymap("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
       -- keymap("n", "<leader>d", vim.diagnostic.open_float, opts)
       -- keymap("n", "[d", vim.diagnostic.goto_prev, opts)
@@ -99,11 +99,8 @@ return {
               checkOnSave = {
                 command = "clippy", -- Use `clippy` for on-save checks
               },
-              -- formatting = {
-              --   enable = true,
-              -- },
               diagnostics = {
-                enable = false, -- Enable diagnostics
+                enable = true, -- Enable diagnostics
               },
               assist = {
                 importGranularity = "module", -- Suggest imports at the module level
@@ -135,6 +132,7 @@ return {
           cmd = {
             "clangd",
             "--query-driver=/opt/homebrew/Cellar/gcc/14.2.0_1/bin/g++-14", -- Use g++ instead of clang++
+            "--fallback-style={BasedOnStyle: LLVM, UseTab: Never, IndentWidth: 4, TabWidth: 4, BreakBeforeBraces: Attach, AllowShortIfStatementsOnASingleLine: true, IndentCaseLabels: true, ColumnLimit: 100, AccessModifierOffset: -4, FixNamespaceComments: false}"
           },
           capabilities = capabilities,
           init_options = {

@@ -63,6 +63,7 @@ return {
     vim.keymap.set("n", "<F4>", dap.step_out, { desc = "step out" })
     vim.keymap.set("n", "<F5>", dap.step_back, { desc = "step back" })
     vim.keymap.set("n", "<leader>dR", dap.restart, { desc = "restart" })
+    vim.keymap.set("n", "<leader>dc", "<Esc>:! g++-14 -g -std=c++23 -Wall '%' -o a.out ");
 
     -- 🔹 Auto-open/close DAP UI
     dap.listeners.before.attach.dapui_config = function() ui.open() end
