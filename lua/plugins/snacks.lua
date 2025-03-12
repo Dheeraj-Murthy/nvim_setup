@@ -27,11 +27,18 @@ return {
     indent = { enabled = false },
     input = { enabled = true },
     notifier = { enabled = true },
-    picker = { enabled = false },
+    explorer = { enabled = true },
+    picker = {
+      sources = {
+        explorer = {
+          -- your explorer picker configuration comes here
+          -- or leave it empty to use the default settings
+        }
+      }
+    },
     quickfile = { enabled = true },
     scroll = { enabled = false },
     statuscolumn = { enabled = false },
-    -- explorer = { enabled = true },
     words = { enabled = false },
     zen = {
       toggles = {
