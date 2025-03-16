@@ -1,6 +1,8 @@
 return {
   "jose-elias-alvarez/null-ls.nvim",
   event = { "BufReadPre", "BufNewFile" },
+
+  ft = { "python" },
   config = function()
     local null_ls = require("null-ls")
 
@@ -10,20 +12,20 @@ return {
       null_ls.builtins.formatting.isort,   -- Python import sorter
       null_ls.builtins.diagnostics.pylint, -- Python linter
     }
-    -- local markdown_sources = {
-    --   null_ls.builtins.formatting.prettier.with({
-    --     filetypes = { "markdown" },
-    --   }),
-    -- }
+    local markdown_sources = {
+      null_ls.builtins.formatting.prettier.with({
+        filetypes = { "markdown" },
+      }),
+    }
 
     -- Combine sources into one flat list
     local all_sources = {}
     for _, source in ipairs(python_sources) do
       table.insert(all_sources, source)
     end
-    -- for _, source in ipairs(markdown_sources) do
-    --   table.insert(all_sources, source)
-    -- end
+    for _, source in ipairs(markdown_sources) do
+      table.insert(all_sources, source)
+    end
 
     null_ls.setup({
       sources = all_sources,

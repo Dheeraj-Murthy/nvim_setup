@@ -132,10 +132,12 @@ return {
           cmd = {
             "clangd",
             "--query-driver=/opt/homebrew/Cellar/gcc/14.2.0_1/bin/g++-14", -- Use g++ instead of clang++
-            "--fallback-style={BasedOnStyle: LLVM, UseTab: Never, IndentWidth: 4, TabWidth: 4, BreakBeforeBraces: Attach, AllowShortIfStatementsOnASingleLine: true, IndentCaseLabels: true, ColumnLimit: 100, AccessModifierOffset: -4, FixNamespaceComments: false}"
+            -- '--fallback-style="{BasedOnStyle: LLVM, UseTab: Never, IndentWidth: 4, TabWidth: 4, BreakBeforeBraces: Attach, AllowShortIfStatementsOnASingleLine: true, IndentCaseLabels: true, ColumnLimit: 100, AccessModifierOffset: -4, FixNamespaceComments: false}"',
+            "--enable-config",
           },
           capabilities = capabilities,
           init_options = {
+            -- useClangdFormat = false,
             clangdFileStatus = true,
             fallbackFlags = {
               "xc++",
@@ -147,6 +149,7 @@ return {
             on_attach(client, bufnr)
             print("Clangd attached to buffer " .. bufnr)
             client.server_capabilities.documentFormattingProvider = true
+            vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
           end,
         })
       end,

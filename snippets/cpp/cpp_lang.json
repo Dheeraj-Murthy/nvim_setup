@@ -12,7 +12,7 @@
       "}"
     ]
   },
-  "contest": {
+  "old_contest": {
     "prefix": "old_contest",
     "body": [
       "#include<bits/stdc++.h>",

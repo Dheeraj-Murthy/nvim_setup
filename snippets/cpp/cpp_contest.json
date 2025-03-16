@@ -1,6 +1,6 @@
 {
-  "aman": {
-    "prefix": "aman",
+  "contest": {
+    "prefix": "contest",
     "body": [
       "#include<bits/stdc++.h>",
       "using namespace std;",
@@ -27,7 +27,7 @@
       "}",
       ""
     ],
-    "description": "basic"
+    "description": "contest"
   },
   "summer": {
     "prefix": "summer",

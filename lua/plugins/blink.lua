@@ -13,7 +13,7 @@ return {
       nerd_font_variant = 'mono'
     },
     sources = {
-      default = { 'path', 'snippets', 'buffer' },
+      default = { 'path', 'snippets', 'buffer', 'lsp' },
     },
     snippets = {
       preset = 'luasnip',
