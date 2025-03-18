@@ -52,7 +52,7 @@ vim.api.nvim_set_keymap(
 )
 
 
-vim.keymap.set("n", "<leader>e", function() Snacks.explorer() end, { desc = "Toggle NvimTree" })
+vim.keymap.set("n", "<leader>e", function() Snacks.explorer() end, { desc = "Toggle SnacksTree" })
 
 -- Telescope keybindings
 vim.keymap.set("n", "<leader> ", "<cmd>Telescope find_files<cr>")
