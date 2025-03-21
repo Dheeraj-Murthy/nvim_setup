@@ -50,7 +50,7 @@ return {
     vim.keymap.set("n", "<leader>d", "", { noremap = "true", desc = "Debugging" });
     -- 🔥 Keybindings
     vim.keymap.set("n", "<space>db", dap.toggle_breakpoint, { desc = "toggle breakpoint" })
-    vim.keymap.set("n", "<space>dc", dap.run_to_cursor, { desc = "run to cursor" })
+    -- vim.keymap.set("n", "<space>dc", dap.run_to_cursor, { desc = "run to cursor" })
 
     -- Eval var under cursor
     vim.keymap.set("n", "<space>?", function()

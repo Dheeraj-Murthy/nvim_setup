@@ -19,10 +19,8 @@ vim.keymap.set("n", "42069", "<C-u>", { noremap = true, silent = true, desc = ""
 -- this is the command to set nvim to paste only from the yank buffer
 vim.api.nvim_set_keymap("v", "p", '"_dp', { noremap = true, silent = true, desc = "continnual paste" })
 vim.api.nvim_set_keymap("n", "dd", '"_dd', { noremap = true, silent = true, desc = "delete does not go to clipboard" })
-vim.api.nvim_set_keymap("n", "x", '"_x',
-  { noremap = true, silent = true, desc = "delete does not go to clipboard" })
-vim.api.nvim_set_keymap("v", "x", '"_x',
-  { noremap = true, silent = true, desc = "delete does not go to clipboard" })
+vim.api.nvim_set_keymap("n", "x", '"_x', { noremap = true, silent = true, desc = "delete does not go to clipboard" })
+vim.api.nvim_set_keymap("v", "x", '"_x', { noremap = true, silent = true, desc = "delete does not go to clipboard" })
 
 --^ Plugin specific keymaps
 --
