@@ -53,6 +53,7 @@ return {
         })
       end
     end
+
     -- Set up Mason LSP servers with streamlined configurations
     mason_lspconfig.setup_handlers({
       -- Default handler for all installed servers
@@ -129,10 +130,11 @@ return {
 
       ["clangd"] = function()
         lspconfig.clangd.setup({
+          filetypes = { "c", "cpp", "objc", "objcpp" },
           cmd = {
             "clangd",
             "--query-driver=/opt/homebrew/Cellar/gcc/14.2.0_1/bin/g++-14", -- Use g++ instead of clang++
-            -- '--fallback-style="{BasedOnStyle: LLVM, UseTab: Never, IndentWidth: 4, TabWidth: 4, BreakBeforeBraces: Attach, AllowShortIfStatementsOnASingleLine: true, IndentCaseLabels: true, ColumnLimit: 100, AccessModifierOffset: -4, FixNamespaceComments: false}"',
+            -- "--fallback-style={BasedOnStyle: LLVM, IndentWidth: 4, TabWidth: 4, UseTab: Never}", -- Just use a .clang-format file in the root or project root
             "--enable-config",
           },
           capabilities = capabilities,
@@ -149,18 +151,10 @@ return {
             on_attach(client, bufnr)
             print("Clangd attached to buffer " .. bufnr)
             client.server_capabilities.documentFormattingProvider = true
-            vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
+            -- vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
           end,
         })
       end,
-
-      -- ["marksman"] = function()
-      --   lspconfig.marksman.setup({
-      --     capabilities = capabilities,
-      --     filetypes = { "markdown", "md" }, -- Ensure filetypes match
-      --     on_attach = on_attach,
-      --   })
-      -- end,
 
       ["ts_ls"] = function()
         lspconfig.ts_ls.setup({
@@ -183,6 +177,7 @@ return {
           end,
         })
       end,
+
       ["pyright"] = function()
         lspconfig.pyright.setup({
           capabilities = capabilities,
@@ -198,6 +193,30 @@ return {
           },
         })
       end,
+
+      ["sqlls"] = function()
+        lspconfig.sqlls.setup({
+          cmd = { vim.fn.stdpath("data") .. "/mason/bin/sql-language-server", "up", "--method", "stdio" },
+          root_dir = function(fname)
+            return vim.loop.cwd() -- Set root directory to the current working directory
+          end,
+          capabilities = capabilities,
+          settings = {
+            sqlLanguageServer = {
+              formatter = {
+                tabWidth = 2,
+                keywordCase = "upper",    -- Options: "preserve", "upper", "lower"
+                indentStyle = "standard", -- "standard" or "tabularLeft"
+              },
+              lint = {
+                dialect = "mysql"
+              }
+            }
+          }
+        })
+      end,
+
+
     })
   end,
 }

@@ -1,5 +1,6 @@
 return {
   "folke/snacks.nvim",
+  --@module "snacks"
   priority = 1000,
   lazy = false,
 
