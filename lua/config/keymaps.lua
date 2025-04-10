@@ -23,30 +23,56 @@ vim.api.nvim_set_keymap("n", "x", '"_x', { noremap = true, silent = true, desc =
 vim.api.nvim_set_keymap("v", "x", '"_x', { noremap = true, silent = true, desc = "delete does not go to clipboard" })
 
 --^ Plugin specific keymaps
---
+-- mini sesssions autosave on quit
+vim.keymap.set("n", "<leader>qq", function()
+    local msessions = require("mini.sessions")
+    local ok = pcall(function()
+        msessions.write("autosave")
+    end)
+    if ok then
+        print("💾 Auto-saved session to 'autosave'")
+    end
+    vim.cmd("qa")
+end, { desc = "Auto-save session and Quit All" })
+
 -- Define key mappings only for Quarto filetypes
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "quarto",
-  callback = function()
-    local opts = { buffer = true, noremap = true, silent = true }
-    -- Render the document
-    vim.keymap.set("n", "<leader>pr", ":w<CR>:QuartoPreview<CR>", opts)
-    -- Close the preview
-    vim.keymap.set("n", "<leader>pc", ":QuartoClosePreview<CR>", opts)
-    -- Render a specific code cell (useful for quick testing)
-    vim.keymap.set("n", "<leader>pq", ":QuartoSendAbove<CR>", opts)
-    -- Render and preview the entire document
-    vim.keymap.set("n", "<leader>pp", ":QuartoPreview<CR>", opts)
-  end,
+    pattern = "quarto",
+    callback = function()
+        local opts = { buffer = true, noremap = true, silent = true }
+        -- Render the document
+        vim.keymap.set("n", "<leader>pr", ":w<CR>:QuartoPreview<CR>", opts)
+        -- Close the preview
+        vim.keymap.set("n", "<leader>pc", ":QuartoClosePreview<CR>", opts)
+        -- Render a specific code cell (useful for quick testing)
+        vim.keymap.set("n", "<leader>pq", ":QuartoSendAbove<CR>", opts)
+        -- Render and preview the entire document
+        vim.keymap.set("n", "<leader>pp", ":QuartoPreview<CR>", opts)
+    end,
+})
+-- Define key mappings only for Quarto filetypes
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "quarto",
+    callback = function()
+        local opts = { buffer = true, noremap = true, silent = true }
+        -- Render the document
+        vim.keymap.set("n", "<leader>pr", ":w<CR>:QuartoPreview<CR>", opts)
+        -- Close the preview
+        vim.keymap.set("n", "<leader>pc", ":QuartoClosePreview<CR>", opts)
+        -- Render a specific code cell (useful for quick testing)
+        vim.keymap.set("n", "<leader>pq", ":QuartoSendAbove<CR>", opts)
+        -- Render and preview the entire document
+        vim.keymap.set("n", "<leader>pp", ":QuartoPreview<CR>", opts)
+    end,
 })
 
 vim.keymap.set({ "v" }, "s", "");
 
 vim.api.nvim_set_keymap(
-  "n",
-  "<leader>rr",
-  ":w !g++-14 % -o %:r && ./%:r < ./input.txt > ./output.txt && tail -f ./output.txt<CR>",
-  { noremap = true, silent = true }
+    "n",
+    "<leader>rr",
+    ":w !g++-14 % -o %:r && ./%:r < ./input.txt > ./output.txt && tail -f ./output.txt<CR>",
+    { noremap = true, silent = true }
 )
 
 
