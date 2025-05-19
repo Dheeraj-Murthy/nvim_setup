@@ -11,7 +11,7 @@ return {
     },
     config = function()
         local lspconfig = require("lspconfig")
-        local mason_lspconfig = require("mason-lspconfig")
+        -- local mason_lspconfig = require("mason-lspconfig")
 
         -- Shared capabilities for autocompletion
         local capabilities = require("blink.cmp").get_lsp_capabilities()
@@ -54,169 +54,161 @@ return {
             end
         end
 
-        -- Set up Mason LSP servers with streamlined configurations
-        mason_lspconfig.setup_handlers({
-            -- Default handler for all installed servers
-            function(server_name)
-                lspconfig[server_name].setup({
-                    capabilities = capabilities,
-                    on_attach = on_attach,
-                })
-            end,
+        -- -- Set up Mason LSP servers with streamlined configurations
+        -- require("mason-lspconfig").setup_handlers({
+        --     -- Default handler for all installed servers
+        --     function(server_name)
+        --         lspconfig[server_name].setup({
+        --             capabilities = capabilities,
+        --             on_attach = on_attach,
+        --         })
+        --     end,
 
-            ["emmet_ls"] = function()
-                lspconfig.emmet_ls.setup({
-                    capabilities = capabilities,
-                    filetypes = {
-                        "html",
-                        "typescriptreact",
-                        "javascriptreact",
-                        "css",
-                        "sass",
-                        "scss",
-                        "less",
-                    },
-                    on_attach = on_attach,
-                })
-            end,
-
-            ["rust_analyzer"] = function()
-                lspconfig.rust_analyzer.setup({
-                    capabilities = capabilities,
-                    on_attach = function(client, bufnr)
-                        -- automatically format on save
-                        vim.api.nvim_create_autocmd("BufWritePre", {
-                            pattern = "*.rs",
-                            callback = function()
-                                vim.cmd("RustFmt")
-                            end,
-                        })
-                    end,
-                    settings = {
-                        ["rust-analyzer"] = {
-                            cargo = {
-                                allFeatures = true, -- Enable all Cargo features
-                            },
-                            checkOnSave = {
-                                command = "clippy", -- Use `clippy` for on-save checks
-                            },
-                            diagnostics = {
-                                enable = true, -- Enable diagnostics
-                            },
-                            assist = {
-                                importGranularity = "module", -- Suggest imports at the module level
-                                importPrefix = "by_self",     -- Use `self` for imports
-                            },
-                            lens = {
-                                enable = true, -- Enable inlay lens
-                            },
-                        },
-                    },
-                })
-            end,
-
-            ["lua_ls"] = function()
-                lspconfig.lua_ls.setup({
-                    capabilities = capabilities,
-                    settings = {
-                        Lua = {
-                            diagnostics = { globals = { "vim" } },
-                            completion = { callSnippet = "Replace" },
-                        },
-                    },
-                    on_attach = on_attach,
-                })
-            end,
-
-            ["clangd"] = function()
-                lspconfig.clangd.setup({
-                    filetypes = { "c", "cpp", "objc", "objcpp" },
-                    cmd = {
-                        "clangd",
-                        "--query-driver=/opt/homebrew/Cellar/gcc/14.2.0_1/bin/g++-14", -- Use g++ instead of clang++
-                        -- "--fallback-style={BasedOnStyle: LLVM, IndentWidth: 4, TabWidth: 4, UseTab: Never}", -- Just use a .clang-format file in the root or project root
-                        "--enable-config",
-                    },
-                    capabilities = capabilities,
-                    init_options = {
-                        -- useClangdFormat = false,
-                        clangdFileStatus = true,
-                        fallbackFlags = {
-                            "xc++",
-                            "-I/usr/local/include",
-                            "-std=c++23",
-                        },
-                    },
-                    on_attach = function(client, bufnr)
-                        on_attach(client, bufnr)
-                        print("Clangd attached to buffer " .. bufnr)
-                        client.server_capabilities.documentFormattingProvider = true
-                        -- vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
-                    end,
-                })
-            end,
-
-            ["ts_ls"] = function()
-                lspconfig.ts_ls.setup({
-                    capabilities = capabilities,
-                    on_attach = function(client, bufnr)
-                        on_attach(client, bufnr)
-                        client.server_capabilities.documentFormattingProvider = true
-                        vim.api.nvim_create_autocmd("BufWritePre", {
-                            buffer = bufnr,
-                            callback = function()
-                                vim.lsp.buf.format({ async = false })
-                            end,
-                        })
-                        client.config.init_options = {
-                            hostInfo = "neovim",
-                            preferences = {
-                                importModuleSpecifierPreference = "relative",
-                            },
-                        }
-                    end,
-                })
-            end,
-
-            ["pyright"] = function()
-                lspconfig.pyright.setup({
-                    capabilities = capabilities,
-                    -- flags = lsp_flags,
-                    settings = {
-                        python = {
-                            analysis = {
-                                autoSearchPaths = true,
-                                useLibraryCodeForTypes = true,
-                                diagnosticMode = "workspace",
-                            },
-                        },
-                    },
-                })
-            end,
-
-            -- ["sqlls"] = function()
-            --     lspconfig.sqlls.setup({
-            --         cmd = { vim.fn.stdpath("data") .. "/mason/bin/sql-language-server", "up", "--method", "stdio" },
-            --         root_dir = function(fname)
-            --             return vim.loop.cwd() -- Set root directory to the current working directory
-            --         end,
-            --         capabilities = capabilities,
-            --         settings = {
-            --             sqlLanguageServer = {
-            --                 formatter = {
-            --                     tabWidth = 2,
-            --                     keywordCase = "upper",    -- Options: "preserve", "upper", "lower"
-            --                     indentStyle = "standard", -- "standard" or "tabularLeft"
-            --                 },
-            --                 lint = {
-            --                     dialect = "mysql"
-            --                 }
-            --             }
-            --         }
-            --     })
-            -- end,
-
-
+        lspconfig.emmet_ls.setup({
+            capabilities = capabilities,
+            filetypes = {
+                "html",
+                "typescriptreact",
+                "javascriptreact",
+                "css",
+                "sass",
+                "scss",
+                "less",
+            },
+            on_attach = on_attach,
         })
+
+        lspconfig.rust_analyzer.setup({
+            capabilities = capabilities,
+            on_attach = function(client, bufnr)
+                -- automatically format on save
+                vim.api.nvim_create_autocmd("BufWritePre", {
+                    pattern = "*.rs",
+                    callback = function()
+                        vim.cmd("RustFmt")
+                    end,
+                })
+            end,
+            settings = {
+                ["rust-analyzer"] = {
+                    cargo = {
+                        allFeatures = true, -- Enable all Cargo features
+                    },
+                    checkOnSave = {
+                        command = "clippy", -- Use `clippy` for on-save checks
+                    },
+                    diagnostics = {
+                        enable = true, -- Enable diagnostics
+                    },
+                    assist = {
+                        importGranularity = "module", -- Suggest imports at the module level
+                        importPrefix = "by_self",     -- Use `self` for imports
+                    },
+                    lens = {
+                        enable = true, -- Enable inlay lens
+                    },
+                },
+            },
+        })
+
+        lspconfig.lua_ls.setup({
+            capabilities = capabilities,
+            settings = {
+                Lua = {
+                    diagnostics = { globals = { "vim" } },
+                    completion = { callSnippet = "Replace" },
+                },
+            },
+            on_attach = on_attach,
+        })
+
+        local custom_caps = vim.lsp.protocol.make_client_capabilities()
+        custom_caps.textDocument.completion.completionItem.labelDetailsSupport = false
+
+        lspconfig.clangd.setup {
+            filetypes = { "c", "cpp", "objc", "objcpp" },
+            cmd = {
+                "clangd",
+            },
+            capabilities = capabilities,
+            init_options = {
+                clangdFileStatus = true,
+                fallbackFlags = {
+                    "xc++",
+                    "-I/usr/local/include",
+                    "-std=c++23",
+                    "-isysroot",
+                    "-I /Library/Developer/CommandLineTools/usr/include/c++/v1", -- libc++ headers
+                },
+                completion = { filterAndSort = true },
+            },
+            handlers = {
+                ["textDocument/signatureHelp"] = function() end,
+            },
+            on_attach = function(client, bufnr)
+                on_attach(client, bufnr)
+                print("Clangd attached to buffer " .. bufnr)
+                client.server_capabilities.documentFormattingProvider = true
+            end,
+        }
+
+        lspconfig.ts_ls.setup({
+            capabilities = capabilities,
+            on_attach = function(client, bufnr)
+                on_attach(client, bufnr)
+                client.server_capabilities.documentFormattingProvider = true
+                vim.api.nvim_create_autocmd("BufWritePre", {
+                    buffer = bufnr,
+                    callback = function()
+                        vim.lsp.buf.format({ async = false })
+                    end,
+                })
+                client.config.init_options = {
+                    hostInfo = "neovim",
+                    preferences = {
+                        importModuleSpecifierPreference = "relative",
+                    },
+                }
+            end,
+        })
+
+        lspconfig.pyright.setup({
+            capabilities = capabilities,
+            -- flags = lsp_flags,
+            settings = {
+                python = {
+                    analysis = {
+                        autoSearchPaths = true,
+                        useLibraryCodeForTypes = true,
+                        diagnosticMode = "workspace",
+                    },
+                },
+            },
+        })
+
+        -- ["sqlls"] = function()
+        --     lspconfig.sqlls.setup({
+        --         cmd = { vim.fn.stdpath("data") .. "/mason/bin/sql-language-server", "up", "--method", "stdio" },
+        --         root_dir = function(fname)
+        --             return vim.loop.cwd() -- Set root directory to the current working directory
+        --         end,
+        --         capabilities = capabilities,
+        --         settings = {
+        --             sqlLanguageServer = {
+        --                 formatter = {
+        --                     tabWidth = 2,
+        --                     keywordCase = "upper",    -- Options: "preserve", "upper", "lower"
+        --                     indentStyle = "standard", -- "standard" or "tabularLeft"
+        --                 },
+        --                 lint = {
+        --                     dialect = "mysql"
+        --                 }
+        --             }
+        --         }
+        --     })
+        -- end,
+
+
+        -- })
     end,
 }

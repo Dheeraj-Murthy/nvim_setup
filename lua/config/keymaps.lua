@@ -22,6 +22,8 @@ vim.api.nvim_set_keymap("n", "dd", '"_dd', { noremap = true, silent = true, desc
 vim.api.nvim_set_keymap("n", "x", '"_x', { noremap = true, silent = true, desc = "delete does not go to clipboard" })
 vim.api.nvim_set_keymap("v", "x", '"_x', { noremap = true, silent = true, desc = "delete does not go to clipboard" })
 
+
+
 --^ Plugin specific keymaps
 -- mini sesssions autosave on quit
 vim.keymap.set("n", "<leader>qq", function()
@@ -66,7 +68,7 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
-vim.keymap.set({ "v" }, "s", "");
+-- vim.keymap.set({ "v" }, "s", "s");
 
 vim.api.nvim_set_keymap(
     "n",

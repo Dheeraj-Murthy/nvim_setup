@@ -36,5 +36,13 @@ return {
         vim.keymap.set("n", "<leader>ae", ":CompetiTest edit_testcase<CR>", { desc = "Edit Testcase" })
         vim.keymap.set("n", "<leader>ac", ":CompetiTest receive contest<CR>", { desc = "Receive Contest" })
         vim.keymap.set("n", "<leader>a", "", { desc = "CompetiTest" })
+
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = "CompetiTest", -- If plugin sets specific filetype
+            callback = function()
+                vim.bo.modifiable = true
+                vim.bo.readonly = false
+            end
+        })
     end,
 }

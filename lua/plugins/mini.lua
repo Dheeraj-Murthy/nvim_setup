@@ -7,7 +7,6 @@ return {
             require('mini.pairs').setup()
             require('mini.ai').setup()
             require('mini.snippets').setup()
-            require('mini.sessions').setup()
         end,
     },
 }

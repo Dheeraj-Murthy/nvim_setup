@@ -36,11 +36,11 @@ return {
                 "tailwindcss",
                 "lua_ls",
                 "emmet_ls",
-                "clangd",
                 "marksman",
                 "rust_analyzer",
             },
             automatic_installation = true,
+            automatic_enable = true,
         })
 
         mason_tool_installer.setup({
