@@ -2,7 +2,7 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-        -- "hrsh7th/cmp-nvim-lsp",
+        -- "hrsh7th/cmp-nvim-lsp", -- optional, your custom blink.cmp instead
         "saghen/blink.cmp",
         { "antosha417/nvim-lsp-file-operations", config = true },
         {
@@ -11,24 +11,20 @@ return {
     },
     config = function()
         local lspconfig = require("lspconfig")
-        -- local mason_lspconfig = require("mason-lspconfig")
+        local mason_lspconfig = require("mason-lspconfig")
 
-        -- Shared capabilities for autocompletion
         local capabilities = require("blink.cmp").get_lsp_capabilities()
         capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-        -- Define diagnostic symbols only once
         local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
         for type, icon in pairs(signs) do
             vim.fn.sign_define("DiagnosticSign" .. type, { text = icon, texthl = "DiagnosticSign" .. type })
         end
 
-        -- Shared `on_attach` function to reduce redundancy
         local function on_attach(client, bufnr)
             local keymap = vim.keymap.set
             local opts = { buffer = bufnr, silent = true }
 
-            -- Set key mappings for LSP actions
             keymap("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
             keymap("n", "gD", vim.lsp.buf.declaration, opts)
             keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
@@ -36,14 +32,7 @@ return {
             keymap("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
             keymap({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
             keymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
-            -- keymap("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
-            -- keymap("n", "<leader>d", vim.diagnostic.open_float, opts)
-            -- keymap("n", "[d", vim.diagnostic.goto_prev, opts)
-            -- keymap("n", "]d", vim.diagnostic.goto_next, opts)
-            -- keymap("n", "K", vim.lsp.buf.hover, opts)
-            -- keymap("n", "<leader>rs", ":LspRestart<CR>", opts)
 
-            -- Enable formatting if available
             if client.server_capabilities.documentFormattingProvider then
                 vim.api.nvim_create_autocmd("BufWritePre", {
                     buffer = bufnr,
@@ -54,15 +43,6 @@ return {
             end
         end
 
-        -- -- Set up Mason LSP servers with streamlined configurations
-        -- require("mason-lspconfig").setup_handlers({
-        --     -- Default handler for all installed servers
-        --     function(server_name)
-        --         lspconfig[server_name].setup({
-        --             capabilities = capabilities,
-        --             on_attach = on_attach,
-        --         })
-        --     end,
 
         lspconfig.emmet_ls.setup({
             capabilities = capabilities,
@@ -80,8 +60,7 @@ return {
 
         lspconfig.rust_analyzer.setup({
             capabilities = capabilities,
-            on_attach = function(client, bufnr)
-                -- automatically format on save
+            on_attach = function(_, bufnr)
                 vim.api.nvim_create_autocmd("BufWritePre", {
                     pattern = "*.rs",
                     callback = function()
@@ -91,22 +70,14 @@ return {
             end,
             settings = {
                 ["rust-analyzer"] = {
-                    cargo = {
-                        allFeatures = true, -- Enable all Cargo features
-                    },
-                    checkOnSave = {
-                        command = "clippy", -- Use `clippy` for on-save checks
-                    },
-                    diagnostics = {
-                        enable = true, -- Enable diagnostics
-                    },
+                    cargo = { allFeatures = true },
+                    checkOnSave = { command = "clippy" },
+                    diagnostics = { enable = true },
                     assist = {
-                        importGranularity = "module", -- Suggest imports at the module level
-                        importPrefix = "by_self",     -- Use `self` for imports
+                        importGranularity = "module",
+                        importPrefix = "by_self",
                     },
-                    lens = {
-                        enable = true, -- Enable inlay lens
-                    },
+                    lens = { enable = true },
                 },
             },
         })
@@ -125,20 +96,28 @@ return {
         local custom_caps = vim.lsp.protocol.make_client_capabilities()
         custom_caps.textDocument.completion.completionItem.labelDetailsSupport = false
 
-        lspconfig.clangd.setup {
+        lspconfig.clangd.setup({
             filetypes = { "c", "cpp", "objc", "objcpp" },
             cmd = {
-                "clangd",
+                "/opt/homebrew/opt/llvm/bin/clangd",
+                "--enable-config",
+                "--query-driver=/opt/homebrew/opt/llvm/bin/clang++",
             },
-            capabilities = capabilities,
+            capabilities = custom_caps,
             init_options = {
                 clangdFileStatus = true,
                 fallbackFlags = {
-                    "xc++",
-                    "-I/usr/local/include",
+                    --     "-xc++",
                     "-std=c++23",
-                    "-isysroot",
-                    "-I /Library/Developer/CommandLineTools/usr/include/c++/v1", -- libc++ headers
+                    --     "-stdlib=libc++",
+                    "-I/usr/local/include",
+                    --     "-isystem", "/opt/homebrew/opt/llvm/include/c++/v1",
+                    --     "-isystem", "/opt/homebrew/opt/llvm/include",
+                    --     "-isystem", "/opt/homebrew/opt/llvm/lib/clang/20/include", -- adjust version
+                    --     "--target=arm64-apple-macos11",                            -- IMPORTANT: match your system arch
+                    --     "-I/opt/homebrew/Cellar/llvm/20.1.5/bin/../include/c++/v1",
+                    --     "-I/opt/homebrew/Cellar/llvm/20.1.5/lib/clang/20/include",
+                    --     "-I/Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk/usr/include",
                 },
                 completion = { filterAndSort = true },
             },
@@ -150,7 +129,7 @@ return {
                 print("Clangd attached to buffer " .. bufnr)
                 client.server_capabilities.documentFormattingProvider = true
             end,
-        }
+        })
 
         lspconfig.ts_ls.setup({
             capabilities = capabilities,
@@ -174,7 +153,6 @@ return {
 
         lspconfig.pyright.setup({
             capabilities = capabilities,
-            -- flags = lsp_flags,
             settings = {
                 python = {
                     analysis = {
@@ -186,29 +164,24 @@ return {
             },
         })
 
-        -- ["sqlls"] = function()
-        --     lspconfig.sqlls.setup({
-        --         cmd = { vim.fn.stdpath("data") .. "/mason/bin/sql-language-server", "up", "--method", "stdio" },
-        --         root_dir = function(fname)
-        --             return vim.loop.cwd() -- Set root directory to the current working directory
-        --         end,
-        --         capabilities = capabilities,
-        --         settings = {
-        --             sqlLanguageServer = {
-        --                 formatter = {
-        --                     tabWidth = 2,
-        --                     keywordCase = "upper",    -- Options: "preserve", "upper", "lower"
-        --                     indentStyle = "standard", -- "standard" or "tabularLeft"
-        --                 },
-        --                 lint = {
-        --                     dialect = "mysql"
-        --                 }
-        --             }
-        --         }
-        --     })
-        -- end,
-
-
-        -- })
+        lspconfig.sqlls.setup({
+            cmd = { vim.fn.stdpath("data") .. "/mason/bin/sql-language-server", "up", "--method", "stdio" },
+            root_dir = function()
+                return vim.loop.cwd()
+            end,
+            capabilities = capabilities,
+            settings = {
+                sqlLanguageServer = {
+                    formatter = {
+                        tabWidth = 2,
+                        keywordCase = "upper",
+                        indentStyle = "standard",
+                    },
+                    lint = {
+                        dialect = "mysql",
+                    },
+                },
+            },
+        })
     end,
 }

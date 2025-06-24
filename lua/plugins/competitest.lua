@@ -15,7 +15,7 @@ return {
             compile_command = {
                 cpp = {
                     exec = "clang++",                                            -- Compiler executable
-                    args = { "-std=c++23", "-Wall", "$(FNAME)", "-o", "a.out" }, -- Compiler arguments
+                    args = { "-std=c++23", "-I/usr/local/include", "-Wall", "$(FNAME)", "-o", "a.out" }, -- Compiler arguments
                 },
             },
             run_command = {
