@@ -83,4 +83,10 @@ return {
             desc = "Lazygit",
         },
     },
+    config = function(_, opts)
+        require("snacks").setup(opts)
+
+        -- Now override after snacks sets it
+        vim.opt.statuscolumn = ""
+    end,
 }

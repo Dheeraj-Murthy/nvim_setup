@@ -17,7 +17,7 @@ vim.cmd("set laststatus=3")
 vim.api.nvim_create_autocmd('VimLeavePre', {
     callback = function()
         local ok = pcall(function()
-            msessions.write('autosave') -- must match your `file` setting if set
+            sessions.write('autosave') -- must match your `file` setting if set
         end)
         if ok then
             vim.schedule(function()
@@ -26,3 +26,10 @@ vim.api.nvim_create_autocmd('VimLeavePre', {
         end
     end,
 })
+
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--     pattern = "*",
+--     callback = function()
+--         vim.opt.statuscolumn = ""
+--     end,
+-- })
