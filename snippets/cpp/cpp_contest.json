@@ -4,11 +4,13 @@
         "body": [
             "#include<bits/stdc++.h>",
             "using namespace std;",
+            "// clang-format off",
             "#define deb(...) { stringstream _ss(#__VA_ARGS__); string _n; auto _t = {__VA_ARGS__}; auto _i = _t.begin(); while (_i != _t.end() && getline(_ss, _n, ',')) cout << (_n[0] == ' ' ? _n.substr(1) : _n) << \"=\" << *_i++ << \" | \"; cout << endl;   }",
             "#define debarr(x) for(auto i: x) cout << i << ' '; cout << endl;",
             "",
             "using ll = long long int;",
             "const int mod = 1000000007;",
+            "// clang-format on",
             "",
             "void solve() {",
             "    ${0}",
