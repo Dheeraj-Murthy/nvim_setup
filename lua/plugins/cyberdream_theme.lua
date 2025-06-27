@@ -2,6 +2,8 @@ return {
     "scottmckendry/cyberdream.nvim",
     lazy = false,
     priority = 1000,
+    enabled = true,
+
     opts = {
         italic_comments = true,
         hide_fillchars = true,

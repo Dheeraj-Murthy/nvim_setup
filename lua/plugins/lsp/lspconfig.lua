@@ -97,7 +97,7 @@ return {
         custom_caps.textDocument.completion.completionItem.labelDetailsSupport = false
 
         lspconfig.clangd.setup({
-            filetypes = { "c", "cpp", "objc", "objcpp" },
+            filetypes = { "cpp", "objcpp" },
             cmd = {
                 "/opt/homebrew/opt/llvm/bin/clangd",
                 "--enable-config",
@@ -131,6 +131,38 @@ return {
             end,
         })
 
+        lspconfig.clangd.setup({
+            filetypes = { "c", "objc" },
+            cmd = {
+                "/opt/homebrew/opt/llvm/bin/clangd",
+                "--enable-config",
+                "--query-driver=/opt/homebrew/opt/llvm/bin/clang",
+            },
+            capabilities = custom_caps,
+            init_options = {
+                clangdFileStatus = true,
+                fallbackFlags = {
+                    --     "-xc++",
+                    --     "-stdlib=libc++",
+                    --     "-isystem", "/opt/homebrew/opt/llvm/include/c++/v1",
+                    --     "-isystem", "/opt/homebrew/opt/llvm/include",
+                    --     "-isystem", "/opt/homebrew/opt/llvm/lib/clang/20/include", -- adjust version
+                    --     "--target=arm64-apple-macos11",                            -- IMPORTANT: match your system arch
+                    --     "-I/opt/homebrew/Cellar/llvm/20.1.5/bin/../include/c++/v1",
+                    --     "-I/opt/homebrew/Cellar/llvm/20.1.5/lib/clang/20/include",
+                    --     "-I/Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk/usr/include",
+                },
+                completion = { filterAndSort = true },
+            },
+            handlers = {
+                ["textDocument/signatureHelp"] = function() end,
+            },
+            on_attach = function(client, bufnr)
+                on_attach(client, bufnr)
+                print("Clangd attached to buffer " .. bufnr)
+                client.server_capabilities.documentFormattingProvider = true
+            end,
+        })
         lspconfig.ts_ls.setup({
             capabilities = capabilities,
             on_attach = function(client, bufnr)
