@@ -2,15 +2,15 @@ return {
     "nvim-lualine/lualine.nvim",
     lazy = false,
     dependencies = { "nvim-tree/nvim-web-devicons" }, -- Optional for icons
+
     config = function()
         require("lualine").setup({
             options = {
-                icons_enabled = true, -- Enable/disable icons in the statusline
-                theme = "cyberdream", -- Set your desired theme, e.g., 'gruvbox', 'nightfly', 'ayu', etc.
-                globalstatus = 3,
-                component_separators = { left = "", right = "" }, -- Separator between components
-                section_separators = { left = "", right = "" }, -- Separator between sections
-                disabled_filetypes = { "NvimTree", "dashboard", "packer" }, -- Disable lualine for certain filetypes
+                icons_enabled = true,
+                theme = "catppuccin",
+                globalstatus = true,
+                section_separators = { left = " ", right = " " },
+                component_separators = { left = " ", right = " " },
             },
             sections = {
                 lualine_a = { "mode" },                               -- Display mode in the first section
