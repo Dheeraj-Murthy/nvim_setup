@@ -8,7 +8,8 @@ vim.keymap.set("n", "<D-CR>", "<Esc>o", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-u>", ":<C-u>normal! dd<CR>", { noremap = true, silent = true })
 -- vim.keymap.set("n", "<D-Del>", "<Esc>d0<CR>", { noremap = true, silent = true })
 -- this is the key map to set command-s to save the current file
-vim.keymap.set({ "n", "i" }, "696970", "<Esc>:w<CR>", { noremap = true, silent = true })
+vim.keymap.set({ "n", "i" }, "696970", "<Esc>:w<CR>",
+    { noremap = true, silent = true })
 vim.keymap.set({ "n", "i" }, "<D-s>", "<Esc>:w<CR>", { noremap = true, silent = true })
 vim.keymap.set({ "n", "i" }, "<D-S>", "<Esc>:w<CR>", { noremap = true, silent = true })
 -- this is the select all on pressing cmd-a keymap

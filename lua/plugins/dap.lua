@@ -7,7 +7,7 @@ return {
         "williamboman/mason.nvim",
         "jay-babu/mason-nvim-dap.nvim", -- Mason DAP integration
     },
-    enabled = false,
+    enabled = true,
     -- lazy = true,
     config = function()
         local dap = require "dap"

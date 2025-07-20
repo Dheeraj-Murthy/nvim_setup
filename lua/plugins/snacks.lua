@@ -87,6 +87,5 @@ return {
         require("snacks").setup(opts)
 
         -- Now override after snacks sets it
-        vim.opt.statuscolumn = ""
     end,
 }

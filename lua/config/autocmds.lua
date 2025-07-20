@@ -27,9 +27,17 @@ vim.api.nvim_create_autocmd('VimLeavePre', {
     end,
 })
 
--- vim.api.nvim_create_autocmd("BufEnter", {
---     pattern = "*",
---     callback = function()
---         vim.opt.statuscolumn = ""
---     end,
--- })
+vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = "*",
+    callback = function()
+        vim.opt.statuscolumn = ""
+    end,
+})
+
+
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end
+})
