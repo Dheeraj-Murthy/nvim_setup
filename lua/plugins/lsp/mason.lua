@@ -11,7 +11,9 @@ return {
         -- import mason-lspconfig
         local mason_lspconfig = require("mason-lspconfig")
 
+
         local mason_tool_installer = require("mason-tool-installer")
+
 
         -- enable mason and configure icons
         mason.setup({
@@ -26,29 +28,29 @@ return {
         -- require("mason-nvim-dap").setup {
         --   ensure_installed = { "codelldb" }
         -- }
-
-        mason_lspconfig.setup({
-            -- list of servers for mason to install
-            ensure_installed = {
-                "ts_ls",
-                "html",
-                "cssls",
-                "tailwindcss",
-                "lua_ls",
-                "emmet_ls",
-                "marksman",
-                "rust_analyzer",
-            },
-            automatic_installation = true,
-            automatic_enable = true,
-        })
-
-        mason_tool_installer.setup({
-            ensure_installed = {
-                "prettier", -- prettier formatter
-                "eslint_d",
-                "jupytext",
-            },
-        })
+        --
+        -- mason_lspconfig.setup({
+        --     -- list of servers for mason to install
+        --     ensure_installed = {
+        --         -- "ts_ls",
+        --         -- "html",
+        --         -- "cssls",
+        --         -- "tailwindcss",
+        --         -- "lua_ls",
+        --         -- "emmet_ls",
+        --         -- "marksman",
+        --         -- "rust_analyzer",
+        --     },
+        --     automatic_installation = true,
+        --     automatic_enable = true,
+        -- })
+        --
+        -- mason_tool_installer.setup({
+        --     ensure_installed = {
+        --         -- "prettier", -- prettier formatter
+        --         -- "eslint_d",
+        --         -- "jupytext",
+        --     },
+        -- })
     end,
 }
