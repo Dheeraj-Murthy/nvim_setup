@@ -1,5 +1,5 @@
 {
-  "Ollama_chat.nvim": { "branch": "main", "commit": "150383f4e9d3c6c13fb9fca7cd3fe3e1e0b3a00c" },
+  "Ollama_chat.nvim": { "branch": "main", "commit": "4a922e9db0b8aba3e66fdfa0e748562d516b517e" },
   "astrotheme": { "branch": "main", "commit": "4a2af93815e4e6adfe69c836e46047a9451de858" },
   "blink.cmp": { "branch": "main", "commit": "327fff91fe6af358e990be7be1ec8b78037d2138" },
   "bufferline.nvim": { "branch": "main", "commit": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3" },
