@@ -3,7 +3,7 @@ return {
     enabled = true,
     config = function()
         require("ollamarun").setup({
-            model = "deepseek-coder-v2", -- or any other Ollama model
+            model = "codellama:7b-instruct-q4_0", -- or any other Ollama model
         })
     end
 }
