@@ -1,67 +1,69 @@
-return {
-    "nvimtools/none-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    ft = { "python", "markdown", "sql", "html", "css", "javascript", "typescript" },
-    config = function()
-        local null_ls = require("null-ls")
-
-        local formatting = null_ls.builtins.formatting
-        local diagnostics = null_ls.builtins.diagnostics
-
-        -- Define all formatters and linters
-        local sources = {
-            -- Python
-            formatting.black,
-            formatting.isort,
-            diagnostics.pylint,
-
-            -- Markdown + Prettier-compatible
-            formatting.prettier.with({
-                filetypes = {
-                    "markdown",
-                    "html",
-                    "css",
-                    "javascript",
-                    "javascriptreact",
-                    "typescript",
-                    "typescriptreact",
-                    "json",
-                    "yaml",
-                },
-            }),
-
-            -- SQL
-            formatting.sqlfluff.with({
-                extra_args = { "--dialect", "mysql" },
-            }),
-        }
-
-        null_ls.setup({
-            sources = sources,
-            on_attach = function(client, bufnr)
-                if client.supports_method("textDocument/formatting") then
-                    -- Format on save
-                    vim.api.nvim_create_autocmd("BufWritePre", {
-                        buffer = bufnr,
-                        callback = function()
-                            vim.lsp.buf.format({ async = false })
-
-                            -- Optional extras for markdown
-                            local ft = vim.bo[bufnr].filetype
-                            if ft == "markdown" then
-                                vim.opt_local.wrap = true
-                                vim.opt_local.linebreak = true
-                                vim.opt_local.spell = true
-                            end
-                        end,
-                    })
-
-                    -- Manual format key
-                    vim.keymap.set("n", "<leader>f", function()
-                        vim.lsp.buf.format({ async = true })
-                    end, { buffer = bufnr, noremap = true, silent = true, desc = "Format file" })
-                end
-            end,
-        })
-    end,
-}
+return {}
+--
+-- return {
+--     "nvimtools/none-ls.nvim",
+--     event = { "BufReadPre", "BufNewFile" },
+--     ft = { "python", "markdown", "sql", "html", "css", "javascript", "typescript" },
+--     config = function()
+--         local null_ls = require("null-ls")
+--
+--         local formatting = null_ls.builtins.formatting
+--         local diagnostics = null_ls.builtins.diagnostics
+--
+--         -- Define all formatters and linters
+--         local sources = {
+--             -- Python
+--             formatting.black,
+--             formatting.isort,
+--             diagnostics.pylint,
+--
+--             -- Markdown + Prettier-compatible
+--             formatting.prettier.with({
+--                 filetypes = {
+--                     "markdown",
+--                     "html",
+--                     "css",
+--                     "javascript",
+--                     "javascriptreact",
+--                     "typescript",
+--                     "typescriptreact",
+--                     "json",
+--                     "yaml",
+--                 },
+--             }),
+--
+--             -- SQL
+--             formatting.sqlfluff.with({
+--                 extra_args = { "--dialect", "mysql" },
+--             }),
+--         }
+--
+--         null_ls.setup({
+--             sources = sources,
+--             on_attach = function(client, bufnr)
+--                 if client.supports_method("textDocument/formatting") then
+--                     -- Format on save
+--                     vim.api.nvim_create_autocmd("BufWritePre", {
+--                         buffer = bufnr,
+--                         callback = function()
+--                             vim.lsp.buf.format({ async = false })
+--
+--                             -- Optional extras for markdown
+--                             local ft = vim.bo[bufnr].filetype
+--                             if ft == "markdown" then
+--                                 vim.opt_local.wrap = true
+--                                 vim.opt_local.linebreak = true
+--                                 vim.opt_local.spell = true
+--                             end
+--                         end,
+--                     })
+--
+--                     -- Manual format key
+--                     vim.keymap.set("n", "<leader>f", function()
+--                         vim.lsp.buf.format({ async = true })
+--                     end, { buffer = bufnr, noremap = true, silent = true, desc = "Format file" })
+--                 end
+--             end,
+--         })
+--     end,
+-- }
