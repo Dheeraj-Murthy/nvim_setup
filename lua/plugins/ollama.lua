@@ -4,7 +4,7 @@ return {
     enabled = true,
     config = function()
         require("ollamarun").setup({
-            model = "codellama:13b-instruct-q4_k_m ", -- or any other Ollama model
+            model = "codellama:13b-instruct-q4_k_m", -- or any other Ollama model
         })
     end
 }
