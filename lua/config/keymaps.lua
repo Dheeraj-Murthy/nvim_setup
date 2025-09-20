@@ -9,9 +9,9 @@ vim.keymap.set("n", "<C-u>", ":<C-u>normal! dd<CR>", { noremap = true, silent = 
 -- vim.keymap.set("n", "<D-Del>", "<Esc>d0<CR>", { noremap = true, silent = true })
 -- this is the key map to set command-s to save the current file
 vim.keymap.set({ "n", "i" }, "696970", "<Esc>:w<CR>",
-    { noremap = true, silent = true })
-vim.keymap.set({ "n", "i" }, "<D-s>", "<Esc>:w<CR>", { noremap = true, silent = true })
-vim.keymap.set({ "n", "i" }, "<D-S>", "<Esc>:w<CR>", { noremap = true, silent = true })
+    { noremap = true, silent = true, desc = "Save File" })
+vim.keymap.set({ "n", "i" }, "<D-s>", "<Esc>:w<CR>", { noremap = true, silent = true, desc = "Save File" })
+vim.keymap.set({ "n", "i" }, "<D-S>", "<Esc>:w<CR>", { noremap = true, silent = true, desc = "Save File" })
 -- this is the select all on pressing cmd-a keymap
 vim.keymap.set({ "i", "n" }, "696971", "ggVG", { noremap = true, silent = true })
 vim.keymap.set({ "i", "n" }, "<D-a>", "ggVG", { noremap = true, silent = true })
