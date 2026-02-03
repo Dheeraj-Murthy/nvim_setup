@@ -7,7 +7,7 @@ return {
   config = function()
     ---@diagnostic disable-next-line: missing-fields
     require("nvim-treesitter.configs").setup({
-      ensure_installed = { "cpp", "python", "javascript", "lua", "html", "css" },
+      ensure_installed = { "cpp", "python", "javascript", "lua", "html", "css", "markdown", "markdown_inline" },
       sync_install = false, -- Async installation for better UI responsiveness
       auto_install = false, -- Avoid unnecessary installs during buffer entry
       ignore_install = {},
@@ -19,7 +19,7 @@ return {
       },
       indent = {
         enable = true,
-        disable = { "python", "markdown" }, -- Disable indentation where needed
+        disable = { "python" }, -- Disable indentation where needed
       },
       incremental_selection = {
         enable = false,

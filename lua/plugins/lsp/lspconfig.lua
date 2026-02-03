@@ -13,7 +13,12 @@ return {
     config = function()
         local lspconfig = require("lspconfig")
         local mason_lspconfig = require("mason-lspconfig")
-
+        mason_lspconfig.setup()
+        -- mason_lspconfig.setup_handlers({
+        --     function(server)
+        --         require("lspconfig")[server].setup({})
+        --     end,
+        -- })
         local capabilities = require("blink.cmp").get_lsp_capabilities()
         capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -26,12 +31,11 @@ return {
             local keymap = vim.keymap.set
             local opts = { buffer = bufnr, silent = true }
 
-            keymap("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
+            keymap("n", "gd", vim.lsp.buf.definition, opts)
             keymap("n", "gD", vim.lsp.buf.declaration, opts)
-            keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
-            keymap("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
-            keymap("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
-            keymap({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+            keymap("n", "gi", vim.lsp.buf.implementation, opts)
+            keymap("n", "gt", vim.lsp.buf.type_definition, opts)
+            keymap("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
             keymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
 
             if client.server_capabilities.documentFormattingProvider then
@@ -43,7 +47,6 @@ return {
                 })
             end
         end
-
 
         lspconfig.emmet_ls.setup({
             capabilities = capabilities,
@@ -63,7 +66,7 @@ return {
             capabilities = capabilities,
             on_attach = function(_, bufnr)
                 vim.api.nvim_create_autocmd("BufWritePre", {
-                    pattern = "*.rs",
+                    buffer = bufnr,
                     callback = function()
                         vim.cmd("RustFmt")
                     end,
@@ -166,6 +169,12 @@ return {
         })
         lspconfig.ts_ls.setup({
             capabilities = capabilities,
+            init_options = {
+                hostInfo = "neovim",
+                preferences = {
+                    importModuleSpecifierPreference = "relative",
+                },
+            },
             on_attach = function(client, bufnr)
                 on_attach(client, bufnr)
                 client.server_capabilities.documentFormattingProvider = true
@@ -175,12 +184,6 @@ return {
                         vim.lsp.buf.format({ async = false })
                     end,
                 })
-                client.config.init_options = {
-                    hostInfo = "neovim",
-                    preferences = {
-                        importModuleSpecifierPreference = "relative",
-                    },
-                }
             end,
         })
 
@@ -195,6 +198,7 @@ return {
                     },
                 },
             },
+            on_attach = on_attach,
         })
 
         lspconfig.sqlls.setup({
@@ -217,10 +221,10 @@ return {
             },
         })
 
-        lspconfig.marksman.setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            filetypes = { "markdown" },
-        })
+        -- lspconfig.marksman.setup({
+        --     capabilities = capabilities,
+        --     on_attach = on_attach,
+        --     filetypes = { "markdown" },
+        -- })
     end,
 }

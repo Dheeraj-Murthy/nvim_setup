@@ -27,7 +27,7 @@ return {
                 {
                     pane = 2,
                     section = "terminal",
-                    cmd = "echo ''",
+                    cmd = "print ",
                     height = 8,
                     padding = 0,
                 },
@@ -57,7 +57,23 @@ return {
         indent = { enabled = false },
         input = { enabled = true },
         notifier = { enabled = true },
-        explorer = { enabled = true },
+        explorer = {
+            enabled = true,
+            win = {
+                list = {
+                    keys = {
+                        ["f"] = function()
+                            local node = require("snacks.explorer").get_node()
+                            if not node or not node.path then
+                                vim.notify("No file selected", vim.log.levels.WARN)
+                                return
+                            end
+                            vim.fn.jobstart({ "open", "-R", node.path }, { detach = true })
+                        end,
+                    },
+                },
+            },
+        },
         picker = {
             sources = {
                 explorer = {},

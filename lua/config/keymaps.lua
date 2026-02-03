@@ -24,6 +24,10 @@ vim.api.nvim_set_keymap("n", "x", '"_x', { noremap = true, silent = true, desc =
 vim.api.nvim_set_keymap("v", "x", '"_x', { noremap = true, silent = true, desc = "delete does not go to clipboard" })
 
 
+-- keymap to open current file in finder
+vim.keymap.set({ "n", "v" }, "<leader>fo", function()
+    vim.cmd("silent !open .")
+end, { desc = "Open folder in Finder" })
 
 --^ Plugin specific keymaps
 -- mini sesssions autosave on quit
@@ -38,21 +42,6 @@ vim.keymap.set("n", "<leader>qq", function()
     vim.cmd("qa")
 end, { desc = "Auto-save session and Quit All" })
 
--- Define key mappings only for Quarto filetypes
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "quarto",
-    callback = function()
-        local opts = { buffer = true, noremap = true, silent = true }
-        -- Render the document
-        vim.keymap.set("n", "<leader>pr", ":w<CR>:QuartoPreview<CR>", opts)
-        -- Close the preview
-        vim.keymap.set("n", "<leader>pc", ":QuartoClosePreview<CR>", opts)
-        -- Render a specific code cell (useful for quick testing)
-        vim.keymap.set("n", "<leader>pq", ":QuartoSendAbove<CR>", opts)
-        -- Render and preview the entire document
-        vim.keymap.set("n", "<leader>pp", ":QuartoPreview<CR>", opts)
-    end,
-})
 -- Define key mappings only for Quarto filetypes
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "quarto",

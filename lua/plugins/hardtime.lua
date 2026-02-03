@@ -1,7 +1,7 @@
 return {
     "m4xshen/hardtime.nvim",
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-    enabled = true,
+    enabled = false,
     opts = {
         max_count = 3, -- Maximum times a key can be pressed
         enabled = true,
