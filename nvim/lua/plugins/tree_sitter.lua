@@ -1,25 +1,23 @@
 return {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     build = ":TSUpdate",
-    dependencies = {
-        "nvim-treesitter/playground",
-    },
     config = function()
         ---@diagnostic disable-next-line: missing-fields
-        require("nvim-treesitter.configs").setup({
+        require("nvim-treesitter").setup({
             ensure_installed = { "cpp", "python", "javascript", "lua", "html", "css", "markdown", "markdown_inline" },
-            sync_install = false, -- Async installation for better UI responsiveness
-            auto_install = false, -- Avoid unnecessary installs during buffer entry
+            sync_install = false,
+            auto_install = false,
             ignore_install = {},
 
             highlight = {
                 enable = true,
-                disable = { "html" }, -- Disable for specific languages
+                disable = { "html" },
                 additional_vim_regex_highlighting = false,
             },
             indent = {
                 enable = false,
-                disable = { "python" }, -- Disable indentation where needed
+                disable = { "python" },
             },
             incremental_selection = {
                 enable = false,
@@ -29,11 +27,6 @@ return {
                     scope_incremental = "grc",
                     node_decremental = "grm",
                 },
-            },
-            playground = {
-                enable = true,
-                updatetime = 100, -- Less frequent updates
-                persist_queries = false,
             },
         })
     end,

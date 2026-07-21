@@ -5,9 +5,14 @@ code in this repository.
 
 ## Overview
 
-This is a Neovim configuration built on **LazyVim** with **lazy.nvim** as the
-plugin manager. It is organized into discrete Lua modules under `lua/config/`
-and `lua/plugins/`.
+This is a personal Neovim configuration using **lazy.nvim** as the plugin
+manager. It was originally built on LazyVim, but the LazyVim plugin import is
+now **commented out** in `lua/config/lazy.lua` — the config is standalone, with
+LazyVim's default options and keymaps vendored locally into
+`lua/config/lazy_opts.lua` and `lua/config/lazy_maps.lua`.
+
+Known quirk: `lazy_opts.lua` still sets `formatexpr`/`foldexpr` to
+`lazyvim.util` functions, which no longer resolve since LazyVim isn't loaded.
 
 ## Code Style
 
@@ -25,28 +30,26 @@ stylua lua/
 `init.lua` bootstraps everything in strict order:
 
 1. Disables netrw, sets `<Space>` as leader
-2. Requires `config/lazy` (lazy.nvim bootstrap + plugin specs)
-3. Requires `config/lazy_opts` (LazyVim framework options)
-4. Requires `config/lazy_maps` (LazyVim default keymaps)
-5. Requires `config/keymaps` (custom user keymaps)
-6. Requires `config/options` (custom Neovim options)
-7. Requires `config/autocmds` (autocommands)
+2. `config/lazy` — lazy.nvim bootstrap; imports `plugins/` and `plugins/lsp/`
+   specs (and re-requires `config/options` at its end)
+3. `config/lazy_opts` — vendored LazyVim option defaults
+4. `config/lazy_maps` — vendored LazyVim base keymaps (window nav, buffers,
+   git, toggles)
+5. `config/keymaps` — custom user keymaps
+6. `config/options` — custom option overrides (updatetime=50, shiftwidth=4,
+   no swapfile)
+7. `config/autocmds` — autocommands
 
 ### Directory Structure
 
 ```
 lua/
-├── config/
-│   ├── lazy.lua        # lazy.nvim bootstrap; loads plugins/ and plugins/lsp/
-│   ├── lazy_opts.lua   # LazyVim global options (completion=blink, picker=telescope)
-│   ├── lazy_maps.lua   # LazyVim base keymaps (window nav, buffers, git, toggles)
-│   ├── options.lua     # Neovim options (updatetime=50, shiftwidth=4, no swapfile)
-│   ├── keymaps.lua     # User keymaps (Mac Cmd keys, Telescope, Harpoon, C++ runner)
-│   └── autocmds.lua    # Autocommands (colorscheme, format-on-save, session save)
+├── config/          # See load order above
 └── plugins/
     ├── lsp/
-    │   ├── lspconfig.lua  # Server configs: clangd, ts_ls, pyright, rust_analyzer, lua_ls, emmet_ls, sqlls
-    │   └── mason.lua      # Mason installer
+    │   ├── lspconfig.lua  # All LSP server configs
+    │   ├── mason.lua      # Mason installer
+    │   └── null_ls.lua    # Disabled (returns {})
     └── *.lua              # One file per plugin or plugin group
 snippets/                  # LuaSnip-compatible JSON snippets (cpp, python, js, lua, c)
 ```
@@ -54,19 +57,27 @@ snippets/                  # LuaSnip-compatible JSON snippets (cpp, python, js, 
 ### Key Architectural Decisions
 
 - **Plugin specs live in `lua/plugins/`** — each file returns a lazy.nvim spec
-  table. Adding a new plugin = adding a new file here.
+  table. Adding a new plugin = adding a new file here. A spec returning `{}`
+  disables that file (see `disable_plug.lua`, `lsp/null_ls.lua`).
 - **LSP servers are configured in `lua/plugins/lsp/lspconfig.lua`** with a
-  shared `on_attach` that sets keymaps and triggers format-on-save (except Rust,
-  which uses RustFmt).
+  shared `on_attach` that sets Telescope-backed LSP keymaps (`gd`, `gr`, `gi`,
+  `gt`, `<leader>rn`). clangd is set up **twice**: once for `cpp/objcpp`
+  (clang++ driver, C++23) and once for `c/objc` (clang driver), both from
+  `/opt/homebrew/opt/llvm/bin/`.
+- **Formatting is manual, not on save** — all format-on-save autocmds are
+  commented out (in `lspconfig.lua`, `autocmds.lua`, and conform's
+  `format_on_save`). Use `<leader>cf` for synchronous LSP format.
+  `conform.nvim` configures prettier for markdown (prose-wrap at 80).
 - **Completion** uses `blink.cmp` (Tab to accept, fuzzy matching).
-- **Formatter** uses `conform.nvim` (prettier for markdown); LSP format-on-save
-  for other filetypes.
 - **Active colorscheme** is set in `autocmds.lua`
   (`vim.cmd("colorscheme ayu")`), not in the plugin spec — change it there.
+  `autocmds.lua` also sets custom highlight overrides for Snacks explorer.
 - **Session management** uses `mini.sessions`; auto-saves to "autosave" on
-  `VimLeavePre`.
-- **Mac-specific keybinds** use hex escape codes (`\27[1;69D` etc.) for Cmd+key
-  combinations in `keymaps.lua`.
+  `VimLeavePre` and via `<leader>qq`.
+- **Mac-specific keybinds** in `keymaps.lua` use `<D-...>` mappings plus
+  numeric stand-in codes (e.g. `696970` for Cmd+S) sent by the terminal.
+- **Performance autocmds**: Treesitter highlighting is disabled for files over
+  5000 lines; `nvim .` opens Oil instead of netrw (VimEnter autocmd).
 
 ### Configured LSP Servers
 
@@ -77,17 +88,19 @@ snippets/                  # LuaSnip-compatible JSON snippets (cpp, python, js, 
 | pyright       | Python                                       |
 | rust_analyzer | Rust (clippy, all features)                  |
 | lua_ls        | Lua                                          |
-| emmet_ls      | HTML / CSS                                   |
-| sqlls         | SQL (MySQL)                                  |
+| emmet_ls      | HTML / CSS / JSX                             |
+| sqlls         | SQL (MySQL dialect)                          |
 
 ### Notable Plugins
 
 - **Snacks.nvim** — dashboard, explorer (`<leader>e`), lazygit (`<leader>gg`),
   notifications, picker
-- **Telescope** — fuzzy finder (`<leader><space>` files, `<leader>/` grep)
+- **Telescope** — fuzzy finder (`<leader><space>` files, `<leader>/` grep,
+  `<leader>t*` for buffers/keymaps/registers/marks/diagnostics)
 - **Harpoon** — file marks (`<leader>hm/hf/hp/ha`)
 - **Flash.nvim** — motion (`s`, `S`)
-- **DAP + DAP-UI** — C/C++ debugger via LLDB (`<F1>`–`<F5>`, `<leader>db`)
+- **DAP + DAP-UI** — C/C++ debugger via LLDB (`<F1>`–`<F5>`, `<leader>d*`;
+  `<leader>dc` compiles with `clang++ -g -std=c++23`)
 - **CompetiTest** — competitive programming test runner (`<leader>a*`)
 - **Oil.nvim** — file manager (opens when nvim is invoked with `.`)
 - **mini.nvim** — surround, pairs, ai text objects, snippets, indentscope
@@ -96,5 +109,5 @@ snippets/                  # LuaSnip-compatible JSON snippets (cpp, python, js, 
 ### Competitive Programming Setup
 
 `<leader>rr` compiles and runs the current C++ file with `g++-14`, reading from
-`input.txt` and writing to `output.txt`. CompetiTest (`<leader>a*`) provides
-test-case management and contest reception.
+`input.txt` and writing to `output.txt` (live-tailed). CompetiTest
+(`<leader>a*`) provides test-case management and contest/problem reception.
