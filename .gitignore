@@ -3,3 +3,5 @@ configstore/
 **/AGENTS.md
 **/*.log
 raycast/**
+zsh/.zsh_history
+
