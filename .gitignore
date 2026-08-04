@@ -4,4 +4,6 @@ configstore/
 **/*.log
 raycast/**
 zsh/.zsh_history
+scripts/logs.txt
+
 
