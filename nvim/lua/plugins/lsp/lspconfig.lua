@@ -13,7 +13,7 @@ return {
     config = function()
         local lspconfig = require("lspconfig")
         local mason_lspconfig = require("mason-lspconfig")
-        mason_lspconfig.setup()
+        mason_lspconfig.setup({ automatic_enable = false })
         -- mason_lspconfig.setup_handlers({
         --     function(server)
         --         require("lspconfig")[server].setup({})
@@ -63,7 +63,8 @@ return {
             on_attach = on_attach,
         })
 
-        lspconfig.rust_analyzer.setup({ capabilities = capabilities,
+        lspconfig.rust_analyzer.setup({
+            capabilities = capabilities,
             -- on_attach = function(_, bufnr)
             --     vim.api.nvim_create_autocmd("BufWritePre", {
             --         buffer = bufnr,
@@ -214,10 +215,10 @@ return {
             },
         })
 
-        -- lspconfig.marksman.setup({
-        --     capabilities = capabilities,
-        --     on_attach = on_attach,
-        --     filetypes = { "markdown" },
-        -- })
+        lspconfig.marksman.setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { "markdown" },
+        })
     end,
 }

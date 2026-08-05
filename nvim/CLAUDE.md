@@ -64,10 +64,9 @@ snippets/                  # LuaSnip-compatible JSON snippets (cpp, python, js, 
   `gt`, `<leader>rn`). clangd is set up **twice**: once for `cpp/objcpp`
   (clang++ driver, C++23) and once for `c/objc` (clang driver), both from
   `/opt/homebrew/opt/llvm/bin/`.
-- **Formatting is manual, not on save** — all format-on-save autocmds are
-  commented out (in `lspconfig.lua`, `autocmds.lua`, and conform's
-  `format_on_save`). Use `<leader>cf` for synchronous LSP format.
-  `conform.nvim` configures prettier for markdown (prose-wrap at 80).
+- **Formatting** — manual only (no format-on-save). `<leader>cf` calls
+  `conform.format({ lsp_fallback = true })`, which uses conform formatters
+  (prettier for markdown, prose-wrap at 80) or falls back to LSP.
 - **Completion** uses `blink.cmp` (Tab to accept, fuzzy matching).
 - **Active colorscheme** is set in `autocmds.lua`
   (`vim.cmd("colorscheme ayu")`), not in the plugin spec — change it there.

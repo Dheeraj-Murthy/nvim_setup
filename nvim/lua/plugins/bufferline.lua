@@ -8,9 +8,9 @@ return {
         local function toggle_bufferline()
             local buffers = vim.fn.getbufinfo({ buflisted = 1 }) -- Get listed buffers
             if #buffers > 1 then
-                vim.opt.showtabline = 2                          -- Always show tabline
+                vim.opt.showtabline = 2 -- Always show tabline
             else
-                vim.opt.showtabline = 0                          -- Hide tabline
+                vim.opt.showtabline = 0 -- Hide tabline
             end
         end
 

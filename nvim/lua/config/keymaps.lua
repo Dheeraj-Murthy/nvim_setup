@@ -27,7 +27,7 @@ map("n", "42069", "<C-u>", { noremap = true, silent = true, desc = "" })
 
 map({ "n", "v" }, "<leader>cf", function()
     vim.cmd('echo "Formatting file..."')
-    vim.lsp.buf.format({ async = false })
+    require("conform").format({ lsp_fallback = true, async = false })
     vim.cmd('echo "File formatted."')
 end, { noremap = true, desc = "Format File" })
 

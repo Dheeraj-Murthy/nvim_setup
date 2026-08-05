@@ -1,19 +1,19 @@
 return {
-    'saghen/blink.cmp',
-    dependencies = { 'rafamadriz/friendly-snippets' },
+    "saghen/blink.cmp",
+    dependencies = { "rafamadriz/friendly-snippets" },
 
-    version = '1.*',
+    version = "1.*",
 
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
         keymap = {
-            preset = 'default',
-            ['<Tab>'] = { 'select_and_accept', 'fallback' },
+            preset = "default",
+            ["<Tab>"] = { "select_and_accept", "fallback" },
         },
 
         appearance = {
-            nerd_font_variant = 'mono',
+            nerd_font_variant = "mono",
         },
 
         completion = {
@@ -23,9 +23,9 @@ return {
         cmdline = { completion = { ghost_text = { enabled = true } } },
 
         sources = {
-            default = { 'lsp', 'path', 'snippets', 'buffer' },
+            default = { "lsp", "path", "snippets", "buffer" },
         },
-        fuzzy = { implementation = "prefer_rust_with_warning" }
+        fuzzy = { implementation = "prefer_rust_with_warning" },
     },
-    opts_extend = { "sources.default" }
+    opts_extend = { "sources.default" },
 }

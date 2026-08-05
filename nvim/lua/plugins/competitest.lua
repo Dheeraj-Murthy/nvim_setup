@@ -6,15 +6,15 @@ return {
     config = function()
         require("competitest").setup({
             -- Custom configuration if needed
-            save_current_file = true,            -- Save the current file before running
+            save_current_file = true, -- Save the current file before running
             testcases_directory = "./testcases", -- Custom directory for testcases
-            maximum_time = 3000,                 -- Max execution time in milliseconds
+            maximum_time = 3000, -- Max execution time in milliseconds
             runner_ui = {
-                interface = "split",             -- popup, split                              -- Use popup UI
+                interface = "split", -- popup, split                              -- Use popup UI
             },
             compile_command = {
                 cpp = {
-                    exec = "clang++",                                            -- Compiler executable
+                    exec = "clang++", -- Compiler executable
                     args = { "-std=c++23", "-I/usr/local/include", "-Wall", "$(FNAME)", "-o", "a.out" }, -- Compiler arguments
                 },
             },
@@ -23,9 +23,9 @@ return {
                     exec = "./a.out",
                 },
             },
-            companion_port = 27121,                               -- Ensure this matches the extension's port
+            companion_port = 27121, -- Ensure this matches the extension's port
             received_problems_path = "$(CWD)/$(PROBLEM).$(FEXT)", -- Customize as needed
-            open_received_problems = true,                        -- Open problem files automatically
+            open_received_problems = true, -- Open problem files automatically
         })
 
         --this is for competitest plugin
@@ -42,7 +42,7 @@ return {
             callback = function()
                 vim.bo.modifiable = true
                 vim.bo.readonly = false
-            end
+            end,
         })
     end,
 }
