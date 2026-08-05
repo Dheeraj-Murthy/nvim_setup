@@ -1,9 +1,16 @@
+# OS & Agent files
+.DS_Store
+AGENTS.md
+
+# Configurations
 configstore/
-**/.DS_Store
-**/AGENTS.md
-**/*.log
-raycast/**
+raycast/
+
+# Zsh history & session state
+zsh/.zsh_sessions/
+zsh/.zcomp*
 zsh/.zsh_history
+
+# Logs
+*.log
 scripts/logs.txt
-
-
